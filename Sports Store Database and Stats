@@ -1,0 +1,44 @@
+-Create a sports store database
+
+CREATE TABLE inventory (id INTEGER PRIMARY KEY, name TEXT, color TEXT, price INTEGER, in_stock INTEGER);
+INSERT INTO inventory VALUES (1, "PPE Kit", "black", 25, 15);
+INSERT INTO inventory VALUES (2, "PPE Kit", "pink", 27, 10);
+INSERT INTO inventory VALUES (3, "softball glove- kid size", "black and pink", 30, 45);
+INSERT INTO inventory VALUES (4, "softball bat", "silver", 18, 7);
+INSERT INTO inventory VALUES (5, "baseball glove- kid size", "red", 15, 20);
+INSERT INTO inventory VALUES (6, "baseball bat", "purple", 8, 23);
+INSERT INTO inventory VALUES (7, "team jerseys", "silver", 13, 5);
+INSERT INTO inventory VALUES (8, "basektball", "orange", 20, 8);
+INSERT INTO inventory VALUES (9, "baseball bag", "black", 85, 9);
+INSERT INTO inventory VALUES (10, "paddles", "black", 29, 13);
+INSERT INTO inventory VALUES (11, "kayaks", "yellow", 25, 13);
+INSERT INTO inventory VALUES (12, "fishing waders", "black", 83, 10);
+INSERT INTO inventory VALUES (13, "fishing pole", "pink", 33, 12);
+INSERT INTO inventory VALUES (14, "knee brace", "black", 95, 9);
+INSERT INTO inventory VALUES (15, "wrist guards", "red", 43, 28);
+INSERT INTO inventory VALUES (16, "mouth guard", "clear", 17, 0);
+INSERT INTO inventory VALUES (17, "shin socks", "black", 12, 0);
+
+CREATE TABLE popular_items (id INTEGER PRIMARY KEY, inventory_id INTEGER, name TEXT, sold_this_month INTEGER, in_stock TEXT);
+
+INSERT INTO popular_items VALUES (1, 1, "PPE KIT", 17, "Yes");
+
+INSERT INTO popular_items VALUES (2, 16, "mouth guard", 32, "No");
+INSERT INTO popular_items VALUES (3, 17, "shin socks", 54, "No");
+INSERT INTO popular_items VALUES (4, 9, "baseball bag", 33, "Yes");
+
+-Show inventory ordered by in-stock, lowest to highest
+SELECT * from inventory ORDER BY in_stock;
+
+-Show all inventory the costs more than $25 and is black
+SELECT name, price from inventory WHERE color = "black" AND price > 25 ORDER BY price;
+
+-what popular items are in stock?
+SELECT popular_items.name, popular_items.in_stock, inventory.in_stock, inventory.price from inventory
+JOIN popular_items
+ON popular_items.inventory_id = inventory.id;
+
+-display each popular item's monthly profit this month
+SELECT popular_items.name, popular_items.sold_this_month, inventory.price, popular_items.sold_this_month*inventory.price AS monthly_profit from inventory
+JOIN popular_items
+ON popular_items.inventory_id = inventory.id;
