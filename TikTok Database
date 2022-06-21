@@ -1,0 +1,26 @@
+-create a database collecting data your favorite app might collect
+
+CREATE TABLE tiktok_creator_usage (id INTEGER PRIMARY KEY, likes INTEGER, video_content TEXT, comments INTEGER);
+
+INSERT INTO tiktok_creator_usage (likes, video_content, comments) VALUES (37, "thirst trap", 8);
+INSERT INTO tiktok_creator_usage (likes, video_content, comments) VALUES (1034, "sex education", 716);
+INSERT INTO tiktok_creator_usage (likes, video_content, comments) VALUES (10231, "thirst trap", 3121);
+
+-display all data
+SELECT * from tiktok_creator_usage;
+
+-alter table adding two new pieces of data to collect and display table
+ALTER TABLE tiktok_creator_usage ADD avg_comment_content TEXT;
+ALTER TABLE tiktok_creator_usage ADD video_length_seconds INTEGER;
+
+SELECT * from tiktok_creator_usage;
+
+-update the table's new columns and display table
+UPDATE tiktok_creator_usage SET avg_comment_content = "flirting" WHERE ID = 3;
+UPDATE tiktok_creator_usage SET video_length_seconds = 15 WHERE ID = 3;
+UPDATE tiktok_creator_usage SET video_length_seconds = 38 WHERE ID = 2;
+UPDATE tiktok_creator_usage SET video_length_seconds = 120 WHERE ID = 1;
+UPDATE tiktok_creator_usage SET avg_comment_content = "encouragement" WHERE ID = 2;
+UPDATE tiktok_creator_usage SET avg_comment_content = "compliments" WHERE ID = 1;
+
+SELECT * from tiktok_creator_usage;
