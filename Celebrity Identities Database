@@ -1,0 +1,99 @@
+-create a table about celebrities
+
+CREATE TABLE celebrities (id INTEGER PRIMARY KEY, stage_name TEXT, age INTEGER, go TEXT);
+
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Halsey", 27, "F");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Lady Gaga", 36, "F");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Cardi B", 29,"F");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Miley Cyrus", 30, "F");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("The Rock", 50, "M");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("The Wknd", 32, "M");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Rhianna", 34, "F");
+INSERT INTO celebrities (stage_name, age, go) VALUES ("Vin Diesel", 54, "M");
+
+CREATE TABLE buddies (id INTEGER PRIMARY KEY, celebrities1_id INTEGER, celebrities2_id INTEGER);
+
+INSERT INTO buddies (celebrities1_id, celebrities2_id) VALUES (1, 4);
+INSERT INTO buddies (celebrities1_id, celebrities2_id) VALUES (2, 6);
+INSERT INTO buddies (celebrities1_id, celebrities2_id) VALUES (3, 7);
+INSERT INTO buddies (celebrities1_id, celebrities2_id) VALUES (5, 8);
+
+CREATE TABLE real_names (id INTEGER PRIMARY KEY, celebrities_id INTEGER, real_name TEXT);
+
+INSERT INTO real_names (celebrities_id, real_name) VALUES (1, "Ashely Fragipane");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (2, "Stefani Germanotta");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (3, "Belcalis Almanzar");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (4, "Destiny Hope Cyrus");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (5, "Dwayne Johnson");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (6, "Abel Tesfaye");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (7, "Robyn Fenty");
+INSERT INTO real_names (celebrities_id, real_name) VALUES (8, "Mark Sinclair");
+
+CREATE TABLE professions (id INTEGER PRIMARY KEY, celebrities_id INTEGER, job TEXT);
+INSERT INTO professions (celebrities_id, job) VALUES (1, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (2, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (2, "actor");
+INSERT INTO professions (celebrities_id, job) VALUES (3, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (3, "rapper");
+INSERT INTO professions (celebrities_id, job) VALUES (4, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (4, "actor");
+INSERT INTO professions (celebrities_id, job) VALUES (5, "actor");
+INSERT INTO professions (celebrities_id, job) VALUES (5, "entertainer");
+INSERT INTO professions (celebrities_id, job) VALUES (6, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (7, "singer/songwriter");
+INSERT INTO professions (celebrities_id, job) VALUES (7, "actor");
+INSERT INTO professions (celebrities_id, job) VALUES (7, "fashion");
+INSERT INTO professions (celebrities_id, job) VALUES (8, "actor");
+
+-show stage names and real names of all in the database
+SELECT stage_name, real_name from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id;
+ 
+-show stage, real names, and jobs of all in the databse
+SELECT stage_name, real_name, job from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id
+    JOIN professions
+    ON celebrities.id = professions.celebrities_id;
+
+-show stage, real names, and jobs of singer/songwirters
+SELECT stage_name, real_name, job from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id
+    JOIN professions
+    ON celebrities.id = professions.celebrities_id
+    WHERE job = "singer/songwriter";
+    
+-display stage/real name and age of all over age 35
+SELECT stage_name, real_name, age from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id
+    WHERE age > 35;
+    
+-display stage/real name and age of males under 30    
+SELECT stage_name, real_name, age from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id
+    WHERE go = "M"
+    OR age < 30;
+
+-display stage/real names and age of females under 30
+SELECT stage_name, real_name, age from celebrities
+    JOIN real_names
+    ON celebrities.id = real_names.celebrities_id
+    WHERE go = "F"
+    AND age < 30;
+
+-display "buddies" next to each other using stage names
+SELECT a.stage_name, b.stage_name from buddies
+    JOIN celebrities a
+    ON buddies.celebrities1_id = a.id 
+    JOIN celebrities b
+    ON buddies.celebrities2_id = b.id;
+    
+-calculate average age of females in database
+SELECT AVG(age) from celebrities WHERE go = "F";
+
+-calculate average age of males in database rounding to the second decimal
+SELECT ROUND(AVG(age), 2) from celebrities WHERE go = "M";
